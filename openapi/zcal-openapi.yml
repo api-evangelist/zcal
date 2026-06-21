@@ -1,0 +1,156 @@
+openapi: 3.0.1
+info:
+  title: Zcal API
+  description: >-
+    Zcal is a free scheduling platform for booking meetings via shareable
+    scheduling links, meeting polls, and team pages (round-robin and
+    collective).
+
+
+    IMPORTANT — API availability: As of 2026-06-21, Zcal does NOT publish a
+    documented, general-purpose public REST API for creating or reading
+    scheduling links, bookings, or events. This OpenAPI document therefore
+    declares an empty `paths` object rather than fabricating endpoints.
+
+
+    The only documented programmatic surface is OUTBOUND WEBHOOKS. When a
+    booking is created, rescheduled, or cancelled, Zcal sends an HTTP POST
+    with a JSON payload to a subscriber URL you configure under your account
+    or team integrations (https://zcal.co/account/integrations). Supported
+    event types are `event.created`, `event.rescheduled`, and
+    `event.cancelled`. Each request may include an optional
+    `x-zcal-webhook-signature` header containing an HMAC SHA-256 hash of the
+    payload signed with your secret key for verification.
+
+
+    The webhook payload has top-level fields `type` (the event type),
+    `created_at` (ISO 8601 timestamp), and `data` (an Event object with
+    `id`, `eventName`, `startDate`, `duration`, `cancelled`, `hosts`,
+    `attendees`, `location`, optional `team`, and invite metadata).
+
+
+    Inbound automation (creating links, reading bookings) is performed via
+    no-code connectors such as Zapier and Make, and through native
+    integrations including Zoom, Stripe, Google Analytics, and Meta Pixel —
+    not via a published HTTP API. See the webhooks documentation for details.
+  termsOfService: https://zcal.co/terms
+  contact:
+    name: Zcal Support
+    url: https://help.zcal.co/
+  version: '1.0'
+servers:
+  - url: https://zcal.co
+    description: >-
+      Zcal web application host. No public REST API base path is documented;
+      this server entry is informational only.
+paths: {}
+components:
+  schemas:
+    WebhookEvent:
+      type: object
+      description: >-
+        Documentation-only schema describing the outbound webhook payload Zcal
+        POSTs to a subscriber URL. This is NOT a callable REST endpoint
+        request/response; it documents the body your endpoint will receive.
+      properties:
+        type:
+          type: string
+          description: The webhook event type.
+          enum:
+            - event.created
+            - event.rescheduled
+            - event.cancelled
+        created_at:
+          type: string
+          format: date-time
+          description: ISO 8601 timestamp indicating when the webhook was generated.
+        data:
+          $ref: '#/components/schemas/Event'
+    Event:
+      type: object
+      description: Booking (event) details included in the webhook payload.
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the event.
+        eventName:
+          type: string
+          description: Display name of the booking.
+        startDate:
+          type: string
+          format: date-time
+          description: Start of the booking in ISO 8601 format.
+        duration:
+          type: integer
+          description: Duration of the booking in minutes.
+        cancelled:
+          type: boolean
+          description: Whether the booking has been cancelled.
+        hosts:
+          type: array
+          description: Host participants (name and email).
+          items:
+            $ref: '#/components/schemas/Host'
+        attendees:
+          type: array
+          description: Attendee participants (invitees and guests).
+          items:
+            $ref: '#/components/schemas/Attendee'
+        location:
+          $ref: '#/components/schemas/Location'
+        team:
+          $ref: '#/components/schemas/Team'
+    Host:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+    Attendee:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        timezone:
+          type: string
+        phone:
+          type: string
+        type:
+          type: string
+          description: Participant role.
+          enum:
+            - invitee
+            - guest
+        responses:
+          type: array
+          description: Responses to custom booking questions.
+          items:
+            type: object
+    Location:
+      type: object
+      properties:
+        type:
+          type: string
+          description: Location type (e.g., online or in-person).
+        url:
+          type: string
+          description: Meeting URL for online locations.
+        id:
+          type: string
+          description: Meeting ID for online locations.
+        passcode:
+          type: string
+          description: Meeting passcode for online locations.
+    Team:
+      type: object
+      description: Optional team details for team (collective/round-robin) invites.
+      properties:
+        id:
+          type: string
+        name:
+          type: string

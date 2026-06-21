@@ -1,0 +1,101 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Zcal
+providerId: zcal
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Scheduling
+- Calendar
+- Booking
+- Meetings
+- Webhooks
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Zcal spend. Zcal is billed as a per-user SaaS subscription
+  (Free, Pro, Business), not usage-metered API consumption — there is no
+  public REST API and therefore no per-call or per-token billing. The main
+  cost levers are: number of paid seats (Pro at $7/user/mo, Business at
+  $12/user/mo), the monthly-vs-annual choice (annual Pro is roughly
+  $72/user/yr), and payment processing — the Free plan adds a 3% Zcal fee on
+  top of Stripe fees for paid bookings, which Pro removes. Webhooks (the only
+  programmatic integration) carry no separate Zcal charge.
+notes: >-
+  Prices captured from public sources as of 2026-06-21 and not reconciled
+  against an authenticated billing account. Verify at
+  https://zcal.co/pricing.
+sources:
+- https://zcal.co/pricing
+- https://help.zcal.co/pricing/pro-plan
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Zcal
+serviceCategory: Scheduling and Collaboration
+billingModel:
+  pricingCategory: Subscription-Based
+  billingFrequency: Monthly or Annual
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+chargeCategoryNotes: >-
+  Subscription seats are a recurring Purchase charge. The 3% Zcal payment fee
+  on the Free plan is a Usage charge tied to processed booking payments.
+focusColumns:
+  ServiceName: Zcal
+  ServiceCategory: Scheduling and Collaboration
+  ProviderName: Zcal
+  PublisherName: Zcal
+  InvoiceIssuerName: Zcal
+  BillingCurrency: USD
+  ChargeCategory: Purchase
+  PricingCategory: Subscription-Based
+meters:
+- name: paid_seats
+  description: Number of paid user seats on Pro or Business, billed per user per period.
+  unit: seats
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+- name: subscription_period
+  description: Monthly or annual subscription term selected.
+  unit: period
+  aggregation: max
+  dimensions:
+  - account
+  - plan
+- name: payment_processing_fee
+  description: >-
+    3% Zcal fee applied on top of Stripe fees for paid bookings on the Free
+    plan; removed on Pro and above.
+  unit: percent_of_transaction
+  aggregation: sum
+  dimensions:
+  - account
+  - plan
+principles:
+- name: Visibility
+  description: Track active paid seats per plan and review the monthly Zcal invoice against headcount.
+- name: Allocation
+  description: Map seats to teams; tag which users genuinely need Pro/Business team features vs. Free.
+- name: Optimization
+  description: >-
+    Right-size seats to actual users; choose annual billing for Pro to lower
+    effective per-seat cost; move payment-collecting users to Pro to drop the
+    3% Free-plan fee; reserve Business only where custom domains / unlimited
+    teams are required.
+- name: Accountability
+  description: Assign a plan owner; review seat count and plan tier each billing cycle against budget.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

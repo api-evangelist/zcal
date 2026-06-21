@@ -1,0 +1,136 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Zcal
+providerId: zcal
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Scheduling
+- Calendar
+- Booking
+- Meetings
+- Webhooks
+- Plans
+description: >-
+  Zcal uses a per-user subscription model with a generous free tier. The Free
+  plan includes unlimited scheduling links, unlimited calendar connections,
+  meeting polls, and video conferencing integrations (Zoom / Google Meet /
+  Microsoft Teams). The Pro plan unlocks team features (team pages, round
+  robin, collective scheduling), removal of Zcal branding, Google Analytics
+  and Meta Pixel integrations, webhooks, and coupon codes. The Business plan
+  adds custom domains, custom email domains, unlimited teams, and additional
+  SMS credits. Webhooks — the only documented programmatic integration
+  surface — are a Pro-and-above feature. Prices below are as published on the
+  Zcal pricing page and may change; verify before relying on them. There is
+  no documented public REST API, so these are product subscription tiers, not
+  API usage tiers.
+notes: >-
+  Plan prices were captured from public pricing pages and third-party
+  reviews as of 2026-06-21 and are not reconciled against an authenticated
+  account. Verify current pricing at https://zcal.co/pricing.
+sources:
+- https://zcal.co/pricing
+- https://help.zcal.co/pricing/pro-plan
+- https://help.zcal.co/integrations/webhooks
+plans:
+- id: zcal-free
+  name: Free
+  type: free
+  description: >-
+    Free scheduling for individuals with unlimited links, unlimited calendar
+    connections, meeting polls, and video conferencing integrations. Zcal
+    branding is shown on booking pages, and a 3% Zcal fee applies on top of
+    Stripe fees for paid bookings.
+  entries:
+  - label: Monthly Subscription
+    name: free_subscription
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $0
+    userMultiplied: false
+  - label: Payment Processing Fee
+    name: free_payment_fee
+    type: usage
+    metric: transaction
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 3% Zcal fee on top of Stripe fees
+    userMultiplied: false
+  elements:
+  - name: Unlimited Scheduling Links
+  - name: Unlimited Calendar Connections
+  - name: Meeting Polls
+  - name: Zoom / Google Meet / Microsoft Teams Integrations
+  - name: Stripe Payments
+- id: zcal-pro
+  name: Pro
+  type: paid
+  description: >-
+    Per-user subscription adding team pages, round robin and collective
+    scheduling, removal of Zcal branding, Google Analytics and Meta Pixel
+    integrations, webhooks, coupon codes, no Zcal payment commission, file
+    uploads on custom questions, multiple reminders, and priority support.
+  entries:
+  - label: Pro Monthly
+    name: pro_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $7 per user / month
+    userMultiplied: true
+  - label: Pro Annual
+    name: pro_annual
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: approximately $72 per user / year
+    userMultiplied: true
+  elements:
+  - name: Team Pages
+  - name: Round Robin Scheduling
+  - name: Collective Scheduling
+  - name: Webhooks
+  - name: Remove Zcal Branding
+  - name: Google Analytics and Meta Pixel
+  - name: Coupon Codes
+  - name: No Zcal Payment Commission
+  - name: Priority Support
+- id: zcal-business
+  name: Business
+  type: paid
+  description: >-
+    Per-user subscription building on Pro with custom domains, custom email
+    domains, unlimited teams, and additional SMS credits.
+  entries:
+  - label: Business Monthly
+    name: business_monthly
+    type: flat
+    metric: subscription
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: $12 per user / month
+    userMultiplied: true
+  elements:
+  - name: Custom Domains
+  - name: Custom Email Domains
+  - name: Unlimited Teams
+  - name: Additional SMS Credits
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

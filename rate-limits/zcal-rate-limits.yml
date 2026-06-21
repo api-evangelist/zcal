@@ -1,0 +1,63 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Zcal
+providerId: zcal
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Scheduling
+- Calendar
+- Booking
+- Meetings
+- Webhooks
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Zcal does not publish a general-purpose public REST API, and as a result
+  there is no documented inbound API rate-limit policy (RPM / TPM / quotas)
+  to reconcile. The primary programmatic surface is OUTBOUND webhooks, where
+  Zcal POSTs booking lifecycle events to a subscriber URL you control; in
+  that direction your own endpoint is the receiver, so any throughput limits
+  are governed by the volume of bookings rather than an API quota. No public
+  webhook delivery rate limit, retry schedule, or concurrency limit is
+  documented at the sources reviewed.
+notes: >-
+  If Zcal publishes API or webhook delivery limits in the future, reconcile
+  this artifact against the official documentation. As of 2026-06-21 no such
+  limits are documented.
+sources:
+- https://help.zcal.co/integrations/webhooks
+- https://help.zcal.co/integrations/webhooks/webhook-payload
+- https://help.zcal.co/
+responseCodes:
+  throttled: not documented
+limits:
+- name: Inbound REST API Rate Limit
+  scope: account
+  metric: requests
+  limit: not applicable
+  notes: No documented public REST API, so no inbound API rate limit exists.
+- name: Outbound Webhook Delivery
+  scope: subscription
+  metric: events
+  limit: not documented
+  notes: >-
+    Zcal POSTs event.created / event.rescheduled / event.cancelled to your
+    subscriber URL. No delivery rate, retry policy, or concurrency limit is
+    documented.
+policies:
+- name: No Documented API Throttling
+  description: >-
+    Because Zcal exposes no public inbound REST API, there is no published
+    throttling or quota policy to enforce against.
+- name: Webhook Receiver Responsibility
+  description: >-
+    Subscribers should return a fast 2xx and process payloads
+    asynchronously; verify the optional x-zcal-webhook-signature HMAC
+    SHA-256 header to authenticate deliveries.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

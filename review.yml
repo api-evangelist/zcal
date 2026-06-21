@@ -1,0 +1,96 @@
+aid: zcal
+name: Zcal
+review:
+  question: Does Zcal expose a documented, general-purpose public REST API?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Zcal's only documented programmatic surface is outbound webhooks (HTTP
+    POST callbacks to a subscriber URL). This is an event-notification
+    surface and could be modeled with AsyncAPI in a future pass, but no
+    AsyncAPI document was authored in this initial catalog entry. The
+    webhook payload is instead documented in the OpenAPI components as a
+    documentation-only WebhookEvent schema, with paths declared empty.
+findings:
+  summary: |
+    Zcal does NOT publish a documented, general-purpose public REST API for
+    creating or reading scheduling links, bookings, or events. The product
+    is operated through the Zcal web application. The only documented
+    programmatic integration surface is OUTBOUND WEBHOOKS: when a booking is
+    created, rescheduled, or cancelled, Zcal sends an HTTP POST with a JSON
+    payload to a subscriber URL configured under account or team
+    integrations. Inbound automation (creating links, reading bookings) is
+    handled via no-code connectors (Zapier, Make) and native product
+    integrations (Zoom, Stripe, Google Analytics, Meta Pixel), not a
+    published HTTP API. Public AppSumo Q&A indicates a fuller API was
+    floated as a possible future addition after webhooks, but as of the
+    review date no such REST API is documented or on the public roadmap.
+  apiAvailability:
+    publicRestApi: false
+    webhooks: true
+    noCodeConnectors: true
+    nativeIntegrations: true
+  webhooks:
+    documented: true
+    direction: outbound
+    transport: HTTP POST (HTTPS)
+    eventTypes:
+      - event.created
+      - event.rescheduled
+      - event.cancelled
+    signing:
+      method: HMAC SHA-256
+      header: x-zcal-webhook-signature
+      required: false
+      note: Optional but recommended; signature is a SHA256 hash of the payload signed with the configured secret key.
+    scopes:
+      - level: user
+        note: Receives events from all individual invite links.
+      - level: team
+        note: Receives events only from that team's collective and round-robin invites.
+    payloadFields:
+      - type
+      - created_at
+      - data (Event object - id, eventName, startDate, duration, cancelled, hosts, attendees, location, team)
+    configuredAt: https://zcal.co/account/integrations
+  integrations:
+    nativeProducts:
+      - Zoom
+      - Stripe
+      - Google Analytics
+      - Meta Pixel
+    automationPlatforms:
+      - Zapier
+      - Make
+sources:
+  - url: https://help.zcal.co/
+    type: Documentation
+    note: Help center overview; no public REST API documented.
+  - url: https://help.zcal.co/integrations/webhooks
+    type: Documentation
+    note: Documents outbound webhooks, the three event types, optional HMAC SHA-256 signing, and user/team scopes.
+  - url: https://help.zcal.co/integrations/webhooks/webhook-payload
+    type: Documentation
+    note: Documents the webhook payload structure (type, created_at, data Event object).
+  - url: https://zcal.co/pricing
+    type: Pricing
+    note: Free / Pro / Business subscription tiers; webhooks are a Pro-and-above feature.
+  - url: https://appsumo.com/products/zcal/questions/rest-api-1282716/
+    type: CommunityQA
+    note: User Q&A indicating a full REST API was discussed as a possible future addition but is not yet available.
+actions:
+  openapiPath: openapi/zcal-openapi.yml
+  openapiPaths: empty
+  apisYmlDocumentsProductSurfaces: true
+  reason: |
+    Because no public REST API exists, the OpenAPI document declares
+    `paths: {}` and explains the true availability (webhooks + no-code
+    connectors) in info.description, with a documentation-only WebhookEvent
+    schema in components. apis.yml documents the three real product surfaces
+    (Scheduling Links, Bookings, Integrations/Webhooks) with humanURLs and
+    accurate descriptions rather than fabricating REST endpoints.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

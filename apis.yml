@@ -1,0 +1,94 @@
+aid: zcal
+url: https://raw.githubusercontent.com/api-evangelist/zcal/refs/heads/main/apis.yml
+name: Zcal
+kind: company
+description: Zcal is a free scheduling platform for booking meetings via shareable
+  scheduling links, meeting polls, and team pages (round-robin and collective). Zcal
+  does not publish a general-purpose public REST API; programmatic integration is
+  delivered through outbound webhooks (event.created, event.rescheduled, event.cancelled)
+  and no-code connectors such as Zapier and Make, plus native integrations including
+  Zoom, Stripe, Google Analytics, and Meta Pixel.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Scheduling
+- Calendar
+- Booking
+- Meetings
+- Webhooks
+created: '2026-06-21'
+modified: '2026-06-21'
+specificationVersion: '0.19'
+apis:
+- aid: zcal:scheduling-links
+  name: Zcal Scheduling Links
+  tags:
+  - Scheduling
+  - Booking
+  - Links
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://help.zcal.co/
+  properties:
+  - url: https://help.zcal.co/
+    type: Documentation
+  - url: https://zcal.co/
+    type: Website
+  - url: openapi/zcal-openapi.yml
+    type: OpenAPI
+  description: Unlimited shareable scheduling links, meeting polls, and customizable
+    booking pages let invitees self-serve a time. This is a product surface managed
+    through the Zcal web application; there is no documented public REST API for
+    creating or managing scheduling links programmatically.
+- aid: zcal:bookings
+  name: Zcal Bookings
+  tags:
+  - Bookings
+  - Events
+  - Attendees
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://help.zcal.co/
+  properties:
+  - url: https://help.zcal.co/
+    type: Documentation
+  - url: https://zcal.co/
+    type: Website
+  - url: openapi/zcal-openapi.yml
+    type: OpenAPI
+  description: Bookings (events) capture timing, hosts, attendees, location, and
+    custom question responses. Booking data is surfaced to external systems through
+    outbound webhooks rather than a queryable public REST API.
+- aid: zcal:integrations-webhooks
+  name: Zcal Integrations and Webhooks
+  tags:
+  - Webhooks
+  - Integrations
+  - Automation
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://help.zcal.co/integrations/webhooks
+  properties:
+  - url: https://help.zcal.co/integrations/webhooks
+    type: Documentation
+  - url: https://help.zcal.co/integrations/webhooks/webhook-payload
+    type: Documentation
+  - url: openapi/zcal-openapi.yml
+    type: OpenAPI
+  description: Outbound webhooks POST a JSON payload to a subscriber URL when a
+    booking is created, rescheduled, or cancelled. Payloads can be verified with
+    an optional HMAC SHA-256 signature via the x-zcal-webhook-signature header.
+    Connectors such as Zapier and Make, plus native Zoom, Stripe, Google Analytics,
+    and Meta Pixel integrations, extend automation without a public REST API.
+common:
+- type: LinkedIn
+  url: https://www.linkedin.com/company/zcal
+- type: Website
+  url: https://zcal.co/
+- type: Documentation
+  url: https://help.zcal.co/
+- type: Plans
+  url: plans/zcal-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/zcal-rate-limits.yml
+- type: FinOps
+  url: finops/zcal-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

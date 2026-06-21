@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Zcal",
+    "version": "1.0",
+    "description": "Zcal does not publish a general-purpose public REST API. The only documented programmatic surface is outbound webhooks: Zcal POSTs a JSON payload to a subscriber URL you configure when a booking is created, rescheduled, or cancelled. The single item below is documentation-only and represents the shape of that outbound webhook payload for reference; it is NOT a Zcal-hosted endpoint you can call. Replace the URL with your own webhook receiver to test delivery."
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks (Outbound - Documentation Only)",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Booking event webhook (event.created / event.rescheduled / event.cancelled)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{webhookReceiverUrl}}",
+            "headers": [
+              {
+                "name": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "name": "x-zcal-webhook-signature",
+                "value": "{{hmacSha256Signature}}"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{\n  \"type\": \"event.created\",\n  \"created_at\": \"2026-06-21T15:00:00Z\",\n  \"data\": {\n    \"id\": \"evt_example\",\n    \"eventName\": \"Intro Call\",\n    \"startDate\": \"2026-06-22T17:00:00Z\",\n    \"duration\": 30,\n    \"cancelled\": false,\n    \"hosts\": [{ \"name\": \"Host Name\", \"email\": \"host@example.com\" }],\n    \"attendees\": [{ \"name\": \"Invitee Name\", \"email\": \"invitee@example.com\", \"timezone\": \"America/New_York\", \"type\": \"invitee\" }],\n    \"location\": { \"type\": \"online\", \"url\": \"https://zoom.us/j/123\", \"id\": \"123\", \"passcode\": \"456\" }\n  }\n}"
+            }
+          },
+          "docs": "Outbound webhook Zcal sends to YOUR subscriber URL on booking lifecycle events. Event types: event.created, event.rescheduled, event.cancelled. The optional x-zcal-webhook-signature header is an HMAC SHA-256 hash of the payload signed with your secret key. This is not a callable Zcal API endpoint. See https://help.zcal.co/integrations/webhooks and https://help.zcal.co/integrations/webhooks/webhook-payload."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
