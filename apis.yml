@@ -77,6 +77,10 @@ apis:
     Connectors such as Zapier and Make, plus native Zoom, Stripe, Google Analytics,
     and Meta Pixel integrations, extend automation without a public REST API.
 common:
+- type: TrustCenter
+  url: security/zcal-trust-center.yml
+- type: DomainSecurity
+  url: security/zcal-domain-security.yml
 - type: LinkedIn
   url: https://www.linkedin.com/company/zcal
 - type: Website
@@ -89,6 +93,8 @@ common:
   url: rate-limits/zcal-rate-limits.yml
 - type: FinOps
   url: finops/zcal-finops.yml
+- type: Blog
+  url: https://zcal.co/blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
