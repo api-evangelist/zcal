@@ -1,0 +1,14 @@
+{
+  "provider": "zcal",
+  "sources": [
+    "zcal-openapi.yml"
+  ],
+  "outputs": [],
+  "archived": [
+    "archived zcal-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
