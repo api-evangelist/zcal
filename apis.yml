@@ -44,7 +44,7 @@ apis:
     type: Documentation
   - url: https://zcal.co/
     type: Website
-  - url: openapi/zcal-openapi.yml
+  - url: openapi/_original/zcal-openapi.yml
     type: OpenAPI
   description: Unlimited shareable scheduling links, meeting polls, and customizable
     booking pages let invitees self-serve a time. This is a product surface managed
@@ -63,7 +63,7 @@ apis:
     type: Documentation
   - url: https://zcal.co/
     type: Website
-  - url: openapi/zcal-openapi.yml
+  - url: openapi/_original/zcal-openapi.yml
     type: OpenAPI
   description: Bookings (events) capture timing, hosts, attendees, location, and
     custom question responses. Booking data is surfaced to external systems through
@@ -81,7 +81,7 @@ apis:
     type: Documentation
   - url: https://help.zcal.co/integrations/webhooks/webhook-payload
     type: Documentation
-  - url: openapi/zcal-openapi.yml
+  - url: openapi/_original/zcal-openapi.yml
     type: OpenAPI
   description: Outbound webhooks POST a JSON payload to a subscriber URL when a
     booking is created, rescheduled, or cancelled. Payloads can be verified with
