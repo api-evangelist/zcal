@@ -26,6 +26,12 @@ tags:
 - Calendar
 - Booking
 - Meetings
+- Webhook
+tags_raw:
+- Scheduling
+- Calendar
+- Booking
+- Meetings
 - Webhooks
 created: '2026-06-21'
 modified: '2026-06-21'
@@ -54,6 +60,10 @@ apis:
   name: Zcal Bookings
   tags:
   - Bookings
+  - Event
+  - Attendees
+  tags_raw:
+  - Bookings
   - Events
   - Attendees
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
@@ -71,6 +81,10 @@ apis:
 - aid: zcal:integrations-webhooks
   name: Zcal Integrations and Webhooks
   tags:
+  - Webhook
+  - Integration
+  - Automation
+  tags_raw:
   - Webhooks
   - Integrations
   - Automation
