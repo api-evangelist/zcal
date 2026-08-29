@@ -8,6 +8,17 @@ description: Zcal is a free scheduling platform for booking meetings via shareab
   delivered through outbound webhooks (event.created, event.rescheduled, event.cancelled)
   and no-code connectors such as Zapier and Make, plus native integrations including
   Zoom, Stripe, Google Analytics, and Meta Pixel.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: unknown
