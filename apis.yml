@@ -70,7 +70,7 @@ apis:
 - aid: zcal:bookings
   name: Zcal Bookings
   tags:
-  - Bookings
+  - Booking
   - Event
   - Attendees
   tags_raw:
